@@ -8,10 +8,10 @@ const PORT = process.env.PORT || 5000
 const cors = require('cors')
 const {generateSongs} = require("./generateSongs.js")
 const router = require('./routes/router')
-const { forEach } = require('../client/src/components/ChatBox/images.js')
+const { forEach } = require('./client/src/components/ChatBox/images.js')
 const app = express()
 const path = require('path')
-require('dotenv.config')
+require('dotenv')
 
 const server = http.createServer(app)
 const io = socketio(server)
@@ -19,9 +19,9 @@ const io = socketio(server)
 app.use(express.json())
 app.use(cors())
 
-app.use(express.static(path.join(__dirname, '.././client/build/')))
+app.use(express.static(path.join(__dirname, './client/build/')))
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '.././client/build/'))
+    res.sendFile(path.join(__dirname, './client/build/'))
 })
 
 generateSongs()
