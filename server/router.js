@@ -1,8 +1,79 @@
 const express = require('express')
 const router = express.Router()
+const Room = require("./models/room.model")
+var User = require("./models/user.model")
+var Chance = require('chance')
+const chance = new Chance()
 
-router.get('/', (req,res) => {
-    res.send('server is up and running')
+router.route('/createRoom').post((req,res) => {
+    const name = req.body.name
+    if(name=="admin")
+    {
+        res.json({success:false})
+        return
+    }
+    const room = chance.integer({min:1000, max:100000})
+    const img = chance.integer({min:0,max:49})
+    const newUser = new User({name,room,img})
+    newUser.save()
+        .then(() => {
+            const newRoom = new Room({
+                turn: 0,
+                members: [name],
+                room
+            })
+            newRoom.save()
+                .then(() => res.json({success:true, room: room, img: img}))
+                .catch(err => res.json(err))
+        })
+        .catch(err => res.json(err))
+})
+
+
+router.route('/joinRoom').post((req,res) => {
+    const name = req.body.name
+    const room = req.body.room
+    const img = chance.integer({min:0,max:49})
+    console.log("here")
+    Room.find({room:room})
+        .then(info => {
+            console.log("im hhere ")
+            console.log(info)
+            if(name=="admin")
+            {
+                res.json({sucess:false, message: "Please choose a different name."})
+            }
+            if(info.length==0)
+            {
+                console.log('here')
+                res.json({success: false, message: "Room does not exist."})
+                return
+            }
+            console.log('works')
+            const data = info[0]
+            if(data.members >=5)
+            {
+                res.json({success:false, message: "Too many occupants."})
+                return
+            }
+            if(data.members.includes(name))
+            {
+                res.json({success:false, message: "Name already in use."})
+                return
+            }
+            const newUser = new User({name,room,img})
+            newUser.save()
+                .then(() => {
+                    console.log("here")
+                    data.members = [...data.members,name]
+                    console.log(data.members)
+                    data.save()
+                        .then(() => res.json({success:true, message: "You have been added to the room.", room: room, img: img}))
+                        .catch(err => res.json(err))
+                })
+                .catch(err => res.json(err))
+        })
+        .catch(err => res.json(err))    
 })
 
 module.exports = router
