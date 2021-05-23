@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 5000
 const cors = require('cors')
 const {generateSongs} = require("./generateSongs.js")
 const router = require('./routes/router')
-const { forEach } = require('./client/src/components/ChatBox/images.js')
 const app = express()
 const path = require('path')
 require('dotenv')
