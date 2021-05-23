@@ -1,0 +1,59 @@
+.mContainer
+{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+@font-face {
+    font-family: "DiscordFont";
+    src: url("../.././fonts/whitneylight.woff");
+}
+@font-face {
+    font-family: "DiscordFontBold";
+    src: url(../.././fonts/whitneysemibold.woff);
+}
+.image_container
+{
+    width: 100%; 
+    text-align: center;
+}
+h3
+{
+    font-family: DiscordFontBold;
+    color: white; 
+    text-align: center;
+    margin-top: 5px;
+}
+.interactables
+{
+    text-align: center;
+    font-family: DiscordFont;
+    color: white;
+}
+#shuffle
+{
+    border: 2px solid white; 
+    border-radius: 4px;   
+}
+#shuffle:active {
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+       -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+            box-shadow: inset 0px 0px 5px #c1c1c1;
+     outline: none;
+  }
+#nametitle,#artitle
+{
+    font-family: DiscordFont;
+    text-align: center;
+    color: white;
+}
+#player
+{
+    text-align: center;
+    width: 100%;
+    
+
+}
+audio::-webkit-media-controls-panel{
+    background-color:white !important;
+}

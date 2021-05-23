@@ -1,0 +1,50 @@
+#pimage
+{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+@font-face {
+    font-family: "DiscordFont";
+    src: url("../.././fonts/whitneylight.woff");
+}
+@font-face {
+    font-family: "DiscordFontBold";
+    src: url(../.././fonts/whitneysemibold.woff);
+}
+
+#text
+{
+    font-family: DiscordFont;
+}
+#extra-text-format
+{
+    max-width: 90%;
+    word-break: break-all;
+}
+#container
+{
+    position: relative;
+    top: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    overflow-x: hidden;
+}
+#time-format
+{
+    margin-left: 10px;
+    font-size: 11px;
+    font-style: normal;
+    color: #747f8d;
+}
+#wave
+{
+    margin-left: 10px;
+}
+#message
+{
+    font-family: DiscordFont;
+    margin-left: 10px;
+    color: #747f8d;
+}

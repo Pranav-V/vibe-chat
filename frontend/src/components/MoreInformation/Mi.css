@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "DiscordFont";
+    src: url("../.././fonts/whitneylight.woff");
+}
+@font-face {
+    font-family: "DiscordFontBold";
+    src: url(../.././fonts/whitneysemibold.woff);
+}
+#mcontainer
+{
+    width: 100%; 
+    height: 100%;
+}
+#members
+{
+    text-align: center;
+    height: 50%;
+    width: 100%; 
+    font-family: DiscordFont;
+    margin-top: 10px;
+    overflow-y: scroll;
+}
+#titlem
+{
+    text-align: center;
+    font-family: DiscordFontBold;
+}
+#simage
+{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
