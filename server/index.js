@@ -2,13 +2,12 @@ const express = require('express')
 const socketio = require('socket.io')
 const http = require('http')
 const mongoose = require('mongoose')
-const {addUser,removeUser,getUser,getUsersInRoom} = require("./users.js")
 const Chat = require('./models/chat.model')
 const User = require('./models/user.model')
 const PORT = process.env.PORT || 5000
 const cors = require('cors')
-
-const router = require('./router')
+const {generateSongs} = require("./generateSongs.js")
+const router = require('./routes/router')
 const { forEach } = require('../client/src/components/ChatBox/images.js')
 const app = express()
 const server = http.createServer(app)
@@ -16,6 +15,8 @@ const io = socketio(server)
 
 app.use(express.json())
 app.use(cors())
+
+generateSongs()
 
 mongoose.connect("mongodb+srv://pnav:pdatabase@cluster0.jvhte.mongodb.net/music-chat?retryWrites=true&w=majority", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
 const connection = mongoose.connection
@@ -73,6 +74,9 @@ io.on('connection', (socket) => {
 })
 
 app.use(router)
+const musicRouter = require("./routes/musicRouter")
+
+app.use('/music',musicRouter)
 
 server.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`)

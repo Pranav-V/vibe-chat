@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const Room = require("./models/room.model")
-var User = require("./models/user.model")
+const Room = require("../models/room.model")
+var User = require("../models/user.model")
 var Chance = require('chance')
 const chance = new Chance()
 
@@ -29,6 +29,19 @@ router.route('/createRoom').post((req,res) => {
         .catch(err => res.json(err))
 })
 
+router.route('/getMemberData').post((req,res) => {
+    const room = req.body.room
+    console.log(room)
+   User.find({room:room})
+        .then(info => {
+            const data = info.map((element) => {
+                return [element.name,element.img]
+            })
+            console.log(data)
+            res.json(data)
+        })
+        .catch(err => res.json(err))
+})
 
 router.route('/joinRoom').post((req,res) => {
     const name = req.body.name
@@ -41,7 +54,7 @@ router.route('/joinRoom').post((req,res) => {
             console.log(info)
             if(name=="admin")
             {
-                res.json({sucess:false, message: "Please choose a different name."})
+                res.json({success:false, message: "Please choose a different name."})
             }
             if(info.length==0)
             {
