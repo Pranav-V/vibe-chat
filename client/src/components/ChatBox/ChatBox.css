@@ -10,6 +10,16 @@ html, body
 {
     overflow-y: hidden;
 }
+#Demo__some-network__share-button
+{
+    
+}
+#trans1,#trans2
+{
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+}
 .header
 {
     font-family: DiscordFontBold;
