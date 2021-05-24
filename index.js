@@ -7,6 +7,7 @@ const User = require('./models/user.model')
 const PORT = process.env.PORT || 5000
 const cors = require('cors')
 const {generateSongs} = require("./generateSongs.js")
+const {retUserInfo,addSocket} = require("./socketuser.js")
 const router = require('./routes/router')
 const app = express()
 const path = require('path')
@@ -33,6 +34,7 @@ connection.once('open', () => {
 
 io.on('connection', (socket) => {
     socket.on('join', ({name,room}, callback) => {
+        addSocket(socket,name,room)
         const number = Math.floor(Math.random()*5)
         Chat.find({room:room, user: "admin"})
             .then(info => {
@@ -52,7 +54,6 @@ io.on('connection', (socket) => {
                 }
             })
         
-        console.log("here")
         Chat.find({room:room}).sort({createdAt:1})
         .then(res => { 
             const formatted = res.map(element => {
@@ -67,21 +68,24 @@ io.on('connection', (socket) => {
         const nMes = new Chat({room: room,user:name,message,img})
         nMes.save()
             .then((res) => {
-                console.log(res)
-                console.log("here")
                 io.to(room).emit('message', {user: name, text : message, img: img, createdAt: res.createdAt})
-                console.log('here')
             })
             .catch(err => {console.log(err)})
         callback()
     })
+    socket.on('manualDisconnect', ({name,room}, callback) => {
+
+    })
     socket.on('disconnect', () => {
-        //io.to(user.room).emit('message', {user:user.name, text: user.name + " has disconnected."})    
+        //io.to(user.room).emit('message', {user:user.name, text: user.name + " has disconnected."})
+        retUserInfo(socket,io)
+       
     })
 })
 
 app.use(router)
 const musicRouter = require("./routes/musicRouter")
+const Room = require('./models/room.model')
 
 app.use('/music',musicRouter)
 

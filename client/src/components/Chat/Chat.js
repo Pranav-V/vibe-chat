@@ -4,10 +4,16 @@ import io from "socket.io-client"
 import ChatBox from "../ChatBox/ChatBox"
 import MoreInformation from "../MoreInformation/MoreInformation"
 import MusicPlayer from "../MusicPlayer/MusicPlayer"
+import $ from "jquery"
 let socket
 
 export default function Chat()
 {
+    window.onload = function(){
+        if(window.location.href == sessionStorage.getItem("origin")){
+            sessionStorage.clear();
+        }
+    }
     var x = 1; 
     const [name, setName] = useState("")
     const [room, setRoom] = useState("")
@@ -20,11 +26,10 @@ export default function Chat()
         "timeout" : 10000,                  
         "transports" : ["websocket"]
     };
-
-    socket = io.connect('https://mighty-badlands-68802.herokuapp.com/',connectionOptions)
+    // 'https://mighty-badlands-68802.herokuapp.com/'
+    socket = io.connect('http://localhost:5000/',connectionOptions)
     console.log("asdfhi")
     console.log('burh')
-
     if(sessionStorage.getItem("name") === null || sessionStorage.getItem("room") === null)
     {
         window.location.href = "/"
@@ -40,6 +45,7 @@ export default function Chat()
     },[])
     useEffect(() => {
         socket.on('message', message => {
+            console.log(message)
             setMessages(messages => [ ...messages, message ]);
             
           });
@@ -52,7 +58,11 @@ export default function Chat()
         })
 
     },[])
-
+    useEffect(() => {
+        window.onbeforeunload = function() {
+            sessionStorage.setItem("origin", window.location.href);
+          };
+    })
     function musicPlay()
     {
         
@@ -66,7 +76,7 @@ export default function Chat()
         <div className = "container-fluid">
             <div className = "row">
                 <div className = "col-lg-3 col-md-3 col-sm-0" style={{backgroundColor:"#4e54c8", padding: "0px"}}>
-                    <MusicPlayer />
+                    <MusicPlayer name = {name} room = {room} />
                 </div>
                 <div className = "col-lg-7 col-md-9 col-sm-12" style= {{height:"100vh"}}>
                     <ChatBox socket = {socket} name ={name} room ={room} img = {img} messages = {messages} />

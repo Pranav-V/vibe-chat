@@ -11,6 +11,19 @@ export default function Message(props)
     }
     const ctime = time.toLocaleTimeString('en-US',{hour: '2-digit', minute: '2-digit'})
     const ret = date + " at " + ctime
+    if(props.user=="admin" && props.img==-5)
+    {
+        return ( 
+            <div className="row">
+                <div className = "col-lg-12 col-md-12 col-sm-12">
+                    <div className = "row" id= "container">
+                        <p id="wave">🦘</p>
+                        <p id="message">See you later {props.text}</p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
     if(props.user=="admin")
     {
         return ( 

@@ -1,6 +1,7 @@
 const axios = require("axios")
 var Chance = require('chance')
 const chance = new Chance()
+const User = require("./models/user.model")
 var songs = []
 
 function generateSongs() 
@@ -25,10 +26,27 @@ function generateSongs()
 
 
 }
-function retrieveRandomSong() 
+function retrieveRandomSong(name,room) 
 {
-    const room = chance.integer({min:0, max:599})
-    return songs[room]
+    const ranSong = chance.integer({min:0, max:599})
+    User.find({name,room})
+        .then(res => {
+            const cuser = res[0]
+            const narray = [...cuser.prevSongs,ranSong]
+            cuser.prevSongs = narray
+            cuser.currentPosition = cuser.currentPosition + 1
+            cuser.save()
+                .then(() => {return songs[ranSong]})
+                .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+
+    return songs[ranSong]
 }
 
-module.exports = {generateSongs, retrieveRandomSong}
+function retrieveSpecificSong(position)
+{
+    return songs[position]
+}
+
+module.exports = {generateSongs, retrieveRandomSong, retrieveSpecificSong}

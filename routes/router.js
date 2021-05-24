@@ -14,7 +14,7 @@ router.route('/createRoom').post((req,res) => {
     }
     const room = chance.integer({min:1000, max:100000})
     const img = chance.integer({min:0,max:49})
-    const newUser = new User({name,room,img})
+    const newUser = new User({name,room,img,prevSongs: [], currentPosition: -1})
     newUser.save()
         .then(() => {
             const newRoom = new Room({
@@ -31,7 +31,6 @@ router.route('/createRoom').post((req,res) => {
 
 router.route('/getMemberData').post((req,res) => {
     const room = req.body.room
-    console.log(room)
    User.find({room:room})
         .then(info => {
             const data = info.map((element) => {
@@ -74,7 +73,7 @@ router.route('/joinRoom').post((req,res) => {
                 res.json({success:false, message: "Name already in use."})
                 return
             }
-            const newUser = new User({name,room,img})
+            const newUser = new User({name,room,img,prevSongs: [],currentPosition:-1})
             newUser.save()
                 .then(() => {
                     console.log("here")
