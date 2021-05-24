@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const RoomSchema = new Schema({
     turn: {type: Number, required: true},
     members: {type: Object, required: true}, 
-    room: {type: String, required: true}
+    room: {type: String, required: true}, 
+    lSongs: {type:Object, required:true}
 },
 {
     timestamps: true

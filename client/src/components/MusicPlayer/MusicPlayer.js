@@ -5,11 +5,14 @@ import Vine from "../../image_assets/thing.gif"
 import ReactAudioPlayer from 'react-audio-player';
 import Shuffle from "../../image_assets/forward.png"
 import Back from "../../image_assets/back.png"
+import LikeD from "../../image_assets/like_d.png"
+import LikeS from "../../image_assets/like_s.png"
 
 
 export default function MusicPlayer(props)
 {
     const [currentSong, setCurrentSong] = useState({})
+    const [likeImage, setlikeImage] = useState(LikeD)
     useEffect(() => {
         axios.post("/music/randomSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room")})
             .then(res => {
@@ -52,9 +55,26 @@ export default function MusicPlayer(props)
             />
             <div className = "interactables">
                 <img height = {50} id = "shuffle" src={Shuffle} onClick = {retrieveNextSong}/>
-                <p>Next Song</p>
+                <p id="infoimg">Next Song</p>
                 <img height = {50} id = "shuffle" src={Back} onClick = {goBack}/>
-                <p>Previous Song</p>
+                <p id="infoimg">Previous Song</p>
+                <img height = {50} id = "shufflechange" src={likeImage} onClick = {() => {
+                    if(likeImage==LikeD)
+                    {
+                        document.getElementById("shufflechange").style.backgroundColor = "white"
+                        document.getElementById("likeinfo").innerHTML = "Like (Yes)"
+                    }
+                    else
+                    {
+                        document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
+                        document.getElementById("likeinfo").innerHTML = "Like"
+                    }
+                    setlikeImage(likeImage==LikeD?LikeS:LikeD)
+                    
+                }
+                    
+                }/>
+                <p id="likeinfo">Like</p>
             </div>
         </div>
     )

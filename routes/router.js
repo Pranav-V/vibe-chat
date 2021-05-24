@@ -20,7 +20,8 @@ router.route('/createRoom').post((req,res) => {
             const newRoom = new Room({
                 turn: 0,
                 members: [name],
-                room
+                room, 
+                lSongs: []
             })
             newRoom.save()
                 .then(() => res.json({success:true, room: room, img: img}))
@@ -49,8 +50,6 @@ router.route('/joinRoom').post((req,res) => {
     console.log("here")
     Room.find({room:room})
         .then(info => {
-            console.log("im hhere ")
-            console.log(info)
             if(name=="admin")
             {
                 res.json({success:false, message: "Please choose a different name."})
@@ -63,7 +62,7 @@ router.route('/joinRoom').post((req,res) => {
             }
             console.log('works')
             const data = info[0]
-            if(data.members >=5)
+            if(data.members >=6)
             {
                 res.json({success:false, message: "Too many occupants."})
                 return
