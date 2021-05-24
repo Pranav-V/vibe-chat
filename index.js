@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
                 })
                 if(!hap)
                 {
-                    io.emit("message", {user: 'admin', text: `${name}`, img: number})
+                    io.to(room).emit("message", {user: 'admin', text: `${name}`, img: number})
                     //socket.broadcast.to(room).emit('message', {user: 'admin', text : `${name}, has joined!`})
                     const nMes = new Chat({room: room, user: "admin", message:name, img: number})
                     nMes.save()
