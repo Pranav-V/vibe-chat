@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {useHistory} from "react-router-dom"
+import queryString from 'query-string';
+
 import "./Home.css"
 import axios from "axios"
 
@@ -8,6 +10,10 @@ export default function Home()
     const [name,setName] = useState("")
     const [joincode,setJoinCode] = useState("")
     const history = useHistory()
+    const {room} = queryString.parse(window.location.href);
+    console.log(window.location.href)
+    console.log(room)
+
     useEffect(()=> {
         document.getElementById('input-btn').addEventListener('click', function () {
         document.getElementById('input-txt').classList.add('active');
