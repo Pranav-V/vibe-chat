@@ -37,12 +37,15 @@ export default function Chat()
     }
     
     useEffect(() => {
-        socket.emit("join", {name:sessionStorage.getItem("name"),room:sessionStorage.getItem("room")}, () => {
-            console.log("err")
-        })
-        setName(sessionStorage.getItem("name"))
-        setRoom(sessionStorage.getItem("room"))
-        setImg(sessionStorage.getItem("img"))
+        if(sessionStorage.getItem("name") != null || sessionStorage.getItem("room") != null)
+        {
+            socket.emit("join", {name:sessionStorage.getItem("name"),room:sessionStorage.getItem("room")}, () => {
+                console.log("err")
+            })
+            setName(sessionStorage.getItem("name"))
+            setRoom(sessionStorage.getItem("room"))
+            setImg(sessionStorage.getItem("img"))
+        }
     },[])
     useEffect(() => {
         socket.on('message', message => {
