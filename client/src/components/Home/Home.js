@@ -10,10 +10,6 @@ export default function Home()
     const [name,setName] = useState("")
     const [joincode,setJoinCode] = useState("")
     const history = useHistory()
-    const {room} = queryString.parse(window.location.href);
-    console.log(window.location.href)
-    console.log(room)
-
     useEffect(()=> {
         document.getElementById('input-btn').addEventListener('click', function () {
         document.getElementById('input-txt').classList.add('active');
@@ -21,8 +17,22 @@ export default function Home()
         document.getElementById('input-btn').classList.add('shrink');
         document.getElementById('input-btn').innerHTML = "Join"
         });
+        const {room} = parseQuery(window.location.href)
+        if(room!=undefined)
+        {
+            setJoinCode(room)
+            document.getElementById("input-btn").click()
+        }
     }, [])
-
+    function parseQuery(queryString) {
+        var query = {};
+        var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+        for (var i = 0; i < pairs.length; i++) {
+            var pair = pairs[i].split('=');
+            query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+        }
+        return query;
+    }
     function createRoom()
     {
         axios.post("/createRoom", {name})

@@ -23,7 +23,7 @@ export default function ChatBox(props)
 {
     const [message,setMessage] = useState("")
     console.log(props.room)
-    const [link,setLink] = useState("https://mighty-badlands-68802.herokuapp.com/?room="+sessionStorage.getItem("room"))
+    const [link,setLink] = useState("https://mighty-badlands-68802.herokuapp.com/?&room="+sessionStorage.getItem("room"))
 
     useEffect(() => {
         var elem = document.getElementById('mContainer');
