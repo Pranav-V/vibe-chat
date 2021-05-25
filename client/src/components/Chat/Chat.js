@@ -9,8 +9,11 @@ let socket
 
 export default function Chat()
 {
+    var reset = false
     window.onload = function(){
         if(window.location.href == sessionStorage.getItem("origin")){
+            reset = true
+            window.location.href = "/"
             sessionStorage.clear();
         }
     }
@@ -31,11 +34,6 @@ export default function Chat()
     socket = io.connect('https://mighty-badlands-68802.herokuapp.com/',connectionOptions)
     console.log("asdfhi")
     console.log('burh')
-    if(sessionStorage.getItem("name") === null || sessionStorage.getItem("room") === null)
-    {
-        window.location.href = "/"
-    }
-    
     useEffect(() => {
         if(sessionStorage.getItem("name") != null || sessionStorage.getItem("room") != null)
         {
@@ -72,7 +70,7 @@ export default function Chat()
         
         //setMusic(music+1)
     }
-    if(sessionStorage.getItem("name") === null || sessionStorage.getItem("room") === null)
+    if(reset)
     {
         return <div></div>
     }

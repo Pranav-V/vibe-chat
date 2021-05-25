@@ -99,8 +99,8 @@ export default function ChatBox(props)
                                         <LinkedinIcon size={32} round />
                                 </LinkedinShareButton>
                                 <RedditShareButton
-                                        url={"github"}
-                                        quote={'asdf'}
+                                         url={link}
+                                         quote={'Vibe Chat Join Link'}
                                         className="Demo__some-network__share-button"
                                     >
                                         <RedditIcon size={32} round />
