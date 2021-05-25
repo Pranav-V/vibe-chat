@@ -56,13 +56,6 @@ export default function ChatBox(props)
                                 <b style={{color:"white", verticalAlign:"middle", display:"table-cell"}}>🎵&nbsp;&nbsp; Room - {props.room}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                             </div>
                             <div className = "col-lg-9 col-md-9 col-sm-12" style = {{height:"100%",top:"15%",textAlign:"right"}}>
-                                <EmailShareButton
-                                        url={link}
-                                        quote={'Vibe Chat Join Link'}
-                                        className="Demo__some-network__share-button"
-                                    >
-                                        <EmailIcon size={32} round />
-                                    </EmailShareButton>
                                 <WhatsappShareButton
                                     url={link}
                                     quote={'Vibe Chat Join Link'}
@@ -77,6 +70,7 @@ export default function ChatBox(props)
                                 >
                                     <TelegramIcon size={32} round />
                                 </TelegramShareButton>
+                                
                                 <FacebookShareButton
                                         url={link}
                                         quote={'Vibe Chat Join Link'}
