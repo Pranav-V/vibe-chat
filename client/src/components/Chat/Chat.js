@@ -13,8 +13,8 @@ export default function Chat()
     window.onload = function(){
         if(window.location.href == sessionStorage.getItem("origin")){
             reset = true
-            window.location.href = "/"
             sessionStorage.clear();
+            window.location.href = "/"
         }
     }
     var x = 1; 
@@ -29,6 +29,13 @@ export default function Chat()
         "timeout" : 10000,                  
         "transports" : ["websocket"]
     };
+    var reset2 = false
+    if(sessionStorage.getItem("room") == null || sessionStorage.getItem("name") ==null)
+    {
+        reset2 = true
+
+        window.location.href = "/"
+    }
     //http://localhost:5000/
     // 'https://mighty-badlands-68802.herokuapp.com/'
     socket = io.connect('https://mighty-badlands-68802.herokuapp.com/',connectionOptions)
@@ -70,7 +77,7 @@ export default function Chat()
         
         //setMusic(music+1)
     }
-    if(reset)
+    if(reset || reset2)
     {
         return <div></div>
     }
