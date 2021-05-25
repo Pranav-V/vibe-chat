@@ -64,36 +64,36 @@ export default function ChatBox(props)
                                         <EmailIcon size={32} round />
                                     </EmailShareButton>
                                 <WhatsappShareButton
-                                    url={"github"}
-                                    quote={'asdf'}
+                                    url={link}
+                                    quote={'Vibe Chat Join Link'}
                                     className="Demo__some-network__share-button"
                                 >
                                     <WhatsappIcon size={32} round />
                                 </WhatsappShareButton>
                                 <TelegramShareButton
-                                    url={"github"}
-                                    quote={'asdf'}
+                                    url={link}
+                                    quote={'Vibe Chat Join Link'}
                                     className="Demo__some-network__share-button"
                                 >
                                     <TelegramIcon size={32} round />
                                 </TelegramShareButton>
                                 <FacebookShareButton
-                                        url={"github"}
-                                        quote={'asdf'}
+                                        url={link}
+                                        quote={'Vibe Chat Join Link'}
                                         className="Demo__some-network__share-button"
                                     >
                                         <FacebookIcon size={32} round />
                                     </FacebookShareButton>
                                 <TwitterShareButton
-                                        url={"github"}
-                                        quote={'asdf'}
+                                        url={link}
+                                        quote={'Vibe Chat Join Link'}
                                         className="Demo__some-network__share-button"
                                     >
                                         <TwitterIcon size={32} round />
                                 </TwitterShareButton>
                                 <LinkedinShareButton
-                                        url={"github"}
-                                        quote={'asdf'}
+                                        url={link}
+                                        quote={'Vibe Chat Join Link'}
                                         className="Demo__some-network__share-button"
                                     >
                                         <LinkedinIcon size={32} round />

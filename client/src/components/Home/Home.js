@@ -16,13 +16,13 @@ export default function Home()
         document.getElementById('input-btn').classList.add('shrink');
         document.getElementById('input-btn').innerHTML = "Join"
         });
-        /*
+        
         const {room} = parseQuery(window.location.href)
         if(room!=undefined)
         {
             setJoinCode(room)
             document.getElementById("input-btn").click()
-        }*/
+        }
     }, [])
     function parseQuery(queryString) {
         var query = {};
