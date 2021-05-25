@@ -42,7 +42,7 @@ export default function Chat()
     console.log("asdfhi")
     console.log('burh')
     useEffect(() => {
-        if(sessionStorage.getItem("name") != null || sessionStorage.getItem("room") != null)
+        if(!reset && !reset2 && sessionStorage.getItem("name") != null && sessionStorage.getItem("room") != null)
         {
             socket.emit("join", {name:sessionStorage.getItem("name"),room:sessionStorage.getItem("room")}, () => {
                 console.log("err")

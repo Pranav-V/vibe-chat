@@ -91,13 +91,6 @@ export default function ChatBox(props)
                                     >
                                         <TwitterIcon size={32} round />
                                 </TwitterShareButton>
-                                <LinkedinShareButton
-                                        url={link}
-                                        quote={'Vibe Chat Join Link'}
-                                        className="Demo__some-network__share-button"
-                                    >
-                                        <LinkedinIcon size={32} round />
-                                </LinkedinShareButton>
                                 <RedditShareButton
                                          url={link}
                                          quote={'Vibe Chat Join Link'}
