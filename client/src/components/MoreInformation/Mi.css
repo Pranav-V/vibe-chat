@@ -48,13 +48,13 @@ td
 #members
 {
     text-align: center;
-    height: 50%;
+    height: 40%;
     width: 100%; 
     font-family: DiscordFont;
 }
 #musicboard
 {
-    height: 50%;
+    height: 60%;
     width: 100%; 
     font-family: DiscordFont;
     overflow-y: scroll;
@@ -66,7 +66,7 @@ td
 }
 #simage
 {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
 }
