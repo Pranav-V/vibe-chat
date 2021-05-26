@@ -4,7 +4,11 @@
     margin: 0px;
     padding: 0px;
 }
-
+#error-notification
+{
+    text-align: center;
+    color: red;
+}
 body{
     font-family: 'Exo', sans-serif;
 }

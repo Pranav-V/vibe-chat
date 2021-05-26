@@ -49,6 +49,7 @@ export default function MusicPlayer(props)
                 }
                 setPointer(pointer+1)
                 setCurrentSong(res.data)
+                props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
             })
     }
     function changeLike(dir)
@@ -87,6 +88,8 @@ export default function MusicPlayer(props)
                 }
                 setPointer(pointer-1)
                 setCurrentSong(res.data.song_data)
+                props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
+
             }
             
         })

@@ -9,6 +9,7 @@ export default function Home()
     const [name,setName] = useState("")
     const [joincode,setJoinCode] = useState("")
     const history = useHistory()
+    var firstClick = true
     useEffect(()=> {
         document.getElementById('input-btn').addEventListener('click', function () {
         document.getElementById('input-txt').classList.add('active');
@@ -35,6 +36,11 @@ export default function Home()
     }
     function createRoom()
     {
+        if(!name.length>0)
+        {
+            document.getElementById("error-notification").innerHTML = "Please enter a name."
+            return
+        }
         axios.post("/createRoom", {name})
             .then(res => {
                 if(res.data.success)
@@ -44,12 +50,29 @@ export default function Home()
                     sessionStorage.setItem("img",res.data.img)
                     history.push('/chat')
                 }
+                else
+                {
+                    document.getElementById("error-notification").innerHTML = res.data.message
+                }
             })
             .catch(err => console.log(err))
     }
     function joinRoom()
     {
-        if(joincode.length!=0)
+        if(firstClick)
+        {
+            firstClick = false
+            return
+        }
+        if(name.length==0)
+        {
+            document.getElementById("error-notification").innerHTML = "Please enter a name."
+        }
+        if(joincode.length==0 && !firstClick)
+        {
+            document.getElementById("error-notification").innerHTML = "Please enter a room code."
+        }
+        if(joincode.length!=0 && name.length()>0)
         {
             console.log("im here")
             axios.post("/joinRoom", {name,room:joincode})
@@ -62,14 +85,20 @@ export default function Home()
 
                         history.push('/chat')
                     }
+                    else
+                    {
+                        document.getElementById("error-notification").innerHTML = res.data.message
+                    }
                 })
         }
     }
     return ( 
+        <>
         <div>
             <div className="context">
                 <h1>🎶 Vibe Chat 🎶</h1>
                 <p style = {{textAlign:"center", color: "white"}}>Hang out, chill, and vibe with your friends.</p>
+                <p id="error-notification"></p>
             </div>
             <div className = "context">
                 <div id = "login-box">
@@ -116,5 +145,6 @@ export default function Home()
                 </ul>
             </div >
         </div>
+        </>
     )
 }

@@ -9,7 +9,7 @@ router.route('/createRoom').post((req,res) => {
     const name = req.body.name
     if(name=="admin")
     {
-        res.json({success:false})
+        res.json({success:false, message:"Please choose a different name."})
         return
     }
     const room = chance.integer({min:1000, max:100000})
@@ -64,12 +64,12 @@ router.route('/joinRoom').post((req,res) => {
             const data = info[0]
             if(data.members >=6)
             {
-                res.json({success:false, message: "Too many occupants."})
+                res.json({success:false, message: "This room has reached its maximum occupancy."})
                 return
             }
             if(data.members.includes(name))
             {
-                res.json({success:false, message: "Name already in use."})
+                res.json({success:false, message: "Please choose a different name. Your name is already being used in the room."})
                 return
             }
             const newUser = new User({name,room,img,prevSongs: [],currentPosition:-1})
