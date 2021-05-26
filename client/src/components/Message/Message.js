@@ -1,5 +1,7 @@
 import React from "react"
 import "./Message.css"
+import {emojify} from 'react-emojione';
+
 export default function Message(props)
 {
     const messages = ["How's it going $$$? 😊", "Welcome, $$$. Ready to jam? 🎸", "$$$ showed up! 🐶", "We've been expecting you $$$. It's time to jam! ⏰", "$$$ has joined. Ready to vibe? 🎧"]
@@ -39,6 +41,15 @@ export default function Message(props)
     }
     else
     {
+        morphedText = ""
+        if(props.text!=null)
+        {
+            var morphedText = props.text
+            var swearjar= require('swearjar'),
+            morphedText = swearjar.censor(morphedText)
+            morphedText = emojify(morphedText)
+        }
+
     return ( 
         <div className="row" id="bc">
             <div className = "col-lg-12 col-md-12 col-sm-12" style={{paddingLeft:"0px"}}>
@@ -49,7 +60,7 @@ export default function Message(props)
                     <div className = "col-lg-10 col-md-10 col-sm-10" style={{margin:"0px", marginLeft:"0px"}}>
                         <div id="text">
                                 <b>{props.user}</b><i id="time-format">{ret}</i>
-                                <p id="extra-text-format">{props.text}</p>
+                                <p id="extra-text-format">{morphedText}</p>
                             </div>
                     </div>
                 </div>

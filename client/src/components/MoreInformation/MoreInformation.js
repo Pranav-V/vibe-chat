@@ -62,7 +62,7 @@ export default function MoreInformation(props)
             </div>
             <div id="musicboard">
                 <h4 id = "titlem">Music Board</h4>
-                <p id="undertext">Vibe with your Friends!</p>
+                <p id="undertext">🎻Vibe with your Friends!🎻</p>
                 <table class="table table-sm" id="tble">
                     <thead>
                         <tr>
