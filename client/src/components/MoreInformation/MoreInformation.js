@@ -36,7 +36,20 @@ export default function MoreInformation(props)
             </div>
             )
     })}
-
+    var table = []
+    if(props.board.length!=0)
+    {
+        console.log("here")
+        table = props.board.map(element => {
+            return(
+            <tr>
+                <td>{element[0].name}</td>
+                <td>{element[1]}</td>
+                <td><button id="tblebutton">Listen</button></td>
+            </tr>)
+        })
+    }
+    console.log(props.board)
     return ( 
         <div id = "mcontainer">
             <div id="members">
@@ -46,6 +59,22 @@ export default function MoreInformation(props)
                         {data}
                     </div>
                 </div>
+            </div>
+            <div id="musicboard">
+                <h4 id = "titlem">Music Board</h4>
+                <p id="undertext">Vibe with your Friends!</p>
+                <table class="table table-sm" id="tble">
+                    <thead>
+                        <tr>
+                        <th scope="col">Song</th>
+                        <th scope="col">Likes</th>
+                        <th scope="col">Play Song?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {table}
+                    </tbody>
+                </table>
             </div>
             
         </div>

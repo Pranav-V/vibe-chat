@@ -7,24 +7,63 @@ import Shuffle from "../../image_assets/forward.png"
 import Back from "../../image_assets/back.png"
 import LikeD from "../../image_assets/like_d.png"
 import LikeS from "../../image_assets/like_s.png"
+import { set } from "mongoose";
 
 
 export default function MusicPlayer(props)
 {
     const [currentSong, setCurrentSong] = useState({})
     const [likeImage, setlikeImage] = useState(LikeD)
+    const [likes,setLikes] = useState([])
+    const [pointer,setPointer] = useState(0)
     useEffect(() => {
         axios.post("/music/randomSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room")})
             .then(res => {
                 setCurrentSong(res.data)
+                likes.push(false)
             })
     }, [])
     function retrieveNextSong()
     {
+        document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
+        document.getElementById("likeinfo").innerHTML = "Like"
+        setlikeImage(LikeD)
         axios.post("/music/nextSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room")})
             .then(res => {
+                if(pointer==likes.length-1)
+                {
+                    likes.push(false)
+                }
+                console.log(likes)
+                if(likes[pointer+1])
+                {
+                    document.getElementById("shufflechange").style.backgroundColor = "white"
+                    document.getElementById("likeinfo").innerHTML = "Like (Yes)"
+                    setlikeImage(LikeS)
+                }
+                else
+                {
+                    document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
+                    document.getElementById("likeinfo").innerHTML = "Like"
+                    setlikeImage(LikeD)
+                }
+                setPointer(pointer+1)
                 setCurrentSong(res.data)
             })
+    }
+    function changeLike(dir)
+    { 
+        if(currentSong!=undefined)
+        {
+            var copy = [...likes]
+            copy[pointer] = dir=="+"?true:false
+            setLikes(copy)
+            console.log(currentSong)
+            axios.post("/music/changeLike", {song:currentSong,room:sessionStorage.getItem("room"),dir})
+                .then(()=> {
+                    props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
+                })
+        }
     }
     function goBack()
     {
@@ -33,6 +72,20 @@ export default function MusicPlayer(props)
             console.log(res)
             if(res.data.success)
             {
+                console.log(likes)
+                if(likes[pointer-1])
+                {
+                    document.getElementById("shufflechange").style.backgroundColor = "white"
+                    document.getElementById("likeinfo").innerHTML = "Like (Yes)"
+                    setlikeImage(LikeS)
+                }
+                else
+                {
+                    document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
+                    document.getElementById("likeinfo").innerHTML = "Like"
+                    setlikeImage(LikeD)
+                }
+                setPointer(pointer-1)
                 setCurrentSong(res.data.song_data)
             }
             
@@ -54,20 +107,22 @@ export default function MusicPlayer(props)
                 onEnded = {retrieveNextSong}
             />
             <div className = "interactables">
-                <img height = {50} id = "shuffle" src={Shuffle} onClick = {retrieveNextSong}/>
+                <img height = {40} id = "shuffle" src={Shuffle} onClick = {retrieveNextSong}/>
                 <p id="infoimg">Next Song</p>
-                <img height = {50} id = "shuffle" src={Back} onClick = {goBack}/>
+                <img height = {40} id = "shuffle" src={Back} onClick = {goBack}/>
                 <p id="infoimg">Previous Song</p>
-                <img height = {50} id = "shufflechange" src={likeImage} onClick = {() => {
+                <img height = {40} id = "shufflechange" src={likeImage} onClick = {() => {
                     if(likeImage==LikeD)
                     {
                         document.getElementById("shufflechange").style.backgroundColor = "white"
+                        changeLike("+")
                         document.getElementById("likeinfo").innerHTML = "Like (Yes)"
                     }
                     else
                     {
                         document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
                         document.getElementById("likeinfo").innerHTML = "Like"
+                        changeLike("-")
                     }
                     setlikeImage(likeImage==LikeD?LikeS:LikeD)
                     

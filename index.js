@@ -3,6 +3,7 @@ const socketio = require('socket.io')
 const http = require('http')
 const mongoose = require('mongoose')
 const Chat = require('./models/chat.model')
+const Team = require('./models/room.model')
 const User = require('./models/user.model')
 const PORT = process.env.PORT || 5000
 const cors = require('cors')
@@ -73,8 +74,26 @@ io.on('connection', (socket) => {
             .catch(err => {console.log(err)})
         callback()
     })
-    socket.on('manualDisconnect', ({name,room}, callback) => {
-
+    socket.on('updateBoard', ({room}, callback) => {
+        Team.find({room:room})
+            .then(info => {
+                var dataA = info[0].lSongs
+                dataA.sort((a,b) => {
+                    if(a[1]==b[1])
+                    {
+                        return 0
+                    }
+                    if(a[1]>b[1])
+                    {
+                        return -1 
+                    }
+                    if(a[1]<b[1])
+                    {
+                        return 1
+                    }
+                })
+                io.to(room).emit('board', {sortedData: dataA})
+            })
     })
     socket.on('disconnect', () => {
         //io.to(user.room).emit('message', {user:user.name, text: user.name + " has disconnected."})

@@ -6,10 +6,44 @@
     font-family: "DiscordFontBold";
     src: url(../.././fonts/whitneysemibold.woff);
 }
+#tble
+{
+    width: 100%;
+    background-color: #4e54c8;
+    color: white;
+    text-align: center;
+}
+#tblebutton
+{
+    background-color: #4e54c8;
+    color: white;
+    border: none;
+    border: 1px solid white;
+    padding: 2px;
+    outline: none; 
+}
+#tblebutton:active
+{
+    transform: scale(0.98);
+            /* Scaling button to 0.98 to its original size */
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            /* Lowering the shadow */
+}
+#undertext
+{
+    font-family: DiscordFont;
+    text-align: center;
+    font-size: 14px;
+}
 #mcontainer
 {
     width: 100%; 
     height: 100%;
+}
+td
+{
+    word-break: break-all;
+    font-size: 10px;
 }
 #members
 {
@@ -17,7 +51,12 @@
     height: 50%;
     width: 100%; 
     font-family: DiscordFont;
-    margin-top: 10px;
+}
+#musicboard
+{
+    height: 50%;
+    width: 100%; 
+    font-family: DiscordFont;
     overflow-y: scroll;
 }
 #titlem

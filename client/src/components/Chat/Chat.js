@@ -22,6 +22,7 @@ export default function Chat()
     const [room, setRoom] = useState("")
     const [img, setImg] = useState("")
     const [messages, setMessages] = useState([]);
+    const [board,setBoard] = useState([])
     const [music, setMusic] = useState([])
     var connectionOptions =  {
         "force new connection" : true,
@@ -38,7 +39,7 @@ export default function Chat()
     }
     //http://localhost:5000/
     // 'https://mighty-badlands-68802.herokuapp.com/'
-    socket = io.connect('https://mighty-badlands-68802.herokuapp.com/',connectionOptions)
+    socket = io.connect('http://localhost:5000/',connectionOptions)
     console.log("asdfhi")
     console.log('burh')
     useEffect(() => {
@@ -65,6 +66,10 @@ export default function Chat()
         socket.on('greetingMessage', message => {
             setMessages(messages => [...messages, message])
         })
+        socket.on('board', message => {
+            setBoard(message.sortedData)
+            console.log(message.sortedData)
+        })
 
     },[])
     useEffect(() => {
@@ -84,14 +89,14 @@ export default function Chat()
     return ( 
         <div className = "container-fluid">
             <div className = "row">
-                <div className = "col-lg-3 col-md-3 col-sm-0" style={{backgroundColor:"#4e54c8", padding: "0px"}}>
-                    <MusicPlayer name = {name} room = {room} />
+                <div className = "col-lg-3 col-md-3 d-none d-md-block" style={{backgroundColor:"#4e54c8", padding: "0px"}}>
+                    <MusicPlayer name = {name} room = {room} socket = {socket}/>
                 </div>
                 <div className = "col-lg-7 col-md-9 col-sm-12" style= {{height:"100vh"}}>
                     <ChatBox socket = {socket} name ={name} room ={room} img = {img} messages = {messages} />
                 </div>
-                <div className = "col-lg-2 col-md-0 col-sm-0" style = {{padding:"0px",height: "100vh", backgroundColor:"#f2f3f5"}}>
-                    <MoreInformation room = {room}/>
+                <div className = "col-lg-2 col-md-0 d-none d-lg-block" style = {{padding:"0px", backgroundColor:"#f2f3f5"}}>
+                    <MoreInformation room = {room} board={board}/>
                 </div>
             </div>
             
