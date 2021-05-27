@@ -22,7 +22,6 @@ import {
 export default function ChatBox(props)
 {
     const [message,setMessage] = useState("")
-    console.log(props.room)
     const [link,setLink] = useState("https://mighty-badlands-68802.herokuapp.com/?&room="+sessionStorage.getItem("room"))
 
     useEffect(() => {
@@ -31,7 +30,6 @@ export default function ChatBox(props)
     }, [props])
     function scrollDown()
     {
-        console.log("here")
         var elem = document.getElementById('mContainer');
         elem.scrollTop = elem.scrollHeight;
     }

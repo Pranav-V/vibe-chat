@@ -18,7 +18,6 @@ export default function MoreInformation(props)
 
         axios.post("/getMemberData", {"room":sessionStorage.getItem("room")})
             .then(res => {
-                console.log(res)
                 setMembers(res.data)
             })
             .catch(err => console.log(err))
@@ -39,7 +38,6 @@ export default function MoreInformation(props)
     var table = []
     if(props.board.length!=0)
     {
-        console.log("here")
         table = props.board.map(element => {
             return(
             <tr>
@@ -49,7 +47,6 @@ export default function MoreInformation(props)
             </tr>)
         })
     }
-    console.log(props.board)
     return ( 
         <div id = "mcontainer">
             <div id="members">

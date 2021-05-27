@@ -21,29 +21,28 @@ export default function MusicPlayer(props)
         axios.post("/music/randomSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room")})
             .then(res => {
                 setCurrentSong(res.data)
-                likes.push(false)
+                var copy = [...likes,false]
+                setLikes(copy)
                 props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
             })
     }, [])
     useEffect(() => {
         if(props.transfer != "")
         {
-            console.log("here")
             axios.post("/music/nextSpecificSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room"), id: props.transfer})
                 .then(res => {
-                    console.log(res.data)
                     if(res.data.success)
                     {
                         setCurrentSong(res.data.song)
-                        likes.push(false)
-                        setPointer(setLikes.length-1)
+                        var copy = [...likes,false]
+                        setLikes(copy)
+                        setPointer(copy.length-1)
                         document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
                         document.getElementById("likeinfo").innerHTML = "Like"
                         setlikeImage(LikeD)
                     }
                     else
                     {
-                        console.log("here")
                         setCurrentSong(res.data.song)
                         setPointer(res.data.index)
                         if(likes[res.data.index])
@@ -71,9 +70,9 @@ export default function MusicPlayer(props)
             .then(res => {
                 if(pointer==likes.length-1)
                 {
-                    likes.push(false)
+                    var copy = [...likes,false]
+                    setLikes(copy)
                 }
-                console.log(likes)
                 if(likes[pointer+1])
                 {
                     document.getElementById("shufflechange").style.backgroundColor = "white"
@@ -99,7 +98,6 @@ export default function MusicPlayer(props)
             var copy = [...likes]
             copy[pointer] = dir=="+"?true:false
             setLikes(copy)
-            console.log(currentSong)
             axios.post("/music/changeLike", {song:currentSong,room:sessionStorage.getItem("room"),dir})
                 .then(()=> {
                     props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
@@ -111,10 +109,8 @@ export default function MusicPlayer(props)
     {
         axios.post("/music/previousSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room")})
         .then(res => {
-            console.log(res)
             if(res.data.success)
             {
-                console.log(likes)
                 if(likes[pointer-1])
                 {
                     document.getElementById("shufflechange").style.backgroundColor = "white"

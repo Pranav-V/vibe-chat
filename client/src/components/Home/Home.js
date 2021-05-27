@@ -61,7 +61,6 @@ export default function Home()
     {
         if(firstClick)
         {
-            console.log("here2")
             setFirstClick(false)
             return
         }
@@ -77,7 +76,6 @@ export default function Home()
         }
         if(joincode.length!=0 && name.length>0)
         {
-            console.log("im here")
             axios.post("/joinRoom", {name,room:joincode})
                 .then(res => {
                     if(res.data.success)

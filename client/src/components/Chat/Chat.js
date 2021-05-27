@@ -41,8 +41,6 @@ export default function Chat()
     //http://localhost:5000/
     // 'https://mighty-badlands-68802.herokuapp.com/'
     socket = io.connect('https://mighty-badlands-68802.herokuapp.com/',connectionOptions)
-    console.log("asdfhi")
-    console.log('burh')
     useEffect(() => {
         if(!reset && !reset2 && sessionStorage.getItem("name") != null && sessionStorage.getItem("room") != null)
         {
@@ -56,12 +54,10 @@ export default function Chat()
     },[])
     useEffect(() => {
         socket.on('message', message => {
-            console.log(message)
             setMessages(messages => [ ...messages, message ]);
             
           });
         socket.on('messageHistory', message => {
-            console.log(message)
             setMessages(messages => [...message,...messages])
         })
         socket.on('greetingMessage', message => {
@@ -69,7 +65,6 @@ export default function Chat()
         })
         socket.on('board', message => {
             setBoard(message.sortedData)
-            console.log(message.sortedData)
         })
 
     },[])
