@@ -40,7 +40,7 @@ export default function Chat()
     }
     //http://localhost:5000/
     // 'https://mighty-badlands-68802.herokuapp.com/'
-    socket = io.connect('http://localhost:5000/',connectionOptions)
+    socket = io.connect('https://mighty-badlands-68802.herokuapp.com/',connectionOptions)
     console.log("asdfhi")
     console.log('burh')
     useEffect(() => {
