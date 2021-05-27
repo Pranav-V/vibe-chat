@@ -22,6 +22,7 @@ export default function MusicPlayer(props)
             .then(res => {
                 setCurrentSong(res.data)
                 likes.push(false)
+                props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
             })
     }, [])
     useEffect(() => {
