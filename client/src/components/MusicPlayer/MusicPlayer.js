@@ -87,6 +87,7 @@ export default function MusicPlayer(props)
                 }
                 setPointer(pointer+1)
                 setCurrentSong(res.data)
+                props.reset()
                 props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
             })
     }
@@ -125,6 +126,7 @@ export default function MusicPlayer(props)
                     document.getElementById("likeinfo").innerHTML = "Like"
                     setlikeImage(LikeD)
                 }
+                props.reset()
                 setPointer(pointer-1)
                 setCurrentSong(res.data.song_data)
                 props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))

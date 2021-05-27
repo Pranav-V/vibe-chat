@@ -82,6 +82,10 @@ export default function Chat()
     {
         setTransfer("" + event.target.value)
     }
+    function resetTransfer()
+    {
+        setTransfer("")
+    }
     function musicPlay()
     {
         
@@ -95,7 +99,7 @@ export default function Chat()
         <div className = "container-fluid">
             <div className = "row">
                 <div className = "col-lg-3 col-md-3 d-none d-md-block" style={{backgroundColor:"#4e54c8", padding: "0px"}}>
-                    <MusicPlayer transfer = {transfer} name = {name} room = {room} socket = {socket}/>
+                    <MusicPlayer reset = {resetTransfer} transfer = {transfer} name = {name} room = {room} socket = {socket}/>
                 </div>
                 <div className = "col-lg-7 col-md-9 col-sm-12" style= {{height:"100vh"}}>
                     <ChatBox socket = {socket} name ={name} room ={room} img = {img} messages = {messages} />
