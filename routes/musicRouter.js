@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('.././models/user.model')
 const Team = require('.././models/room.model')
-const {retrieveRandomSong, retrieveSpecificSong} = require("../generateSongs.js")
+const {retrieveRandomSong, retrieveSpecificSong,retrieveSongById} = require("../generateSongs.js")
 
 router.route('/randomSong').post((req,res) => {
     const name = req.body.name
@@ -75,6 +75,51 @@ router.route('/nextSong').post((req,res) => {
             }
 
         })
+})
+router.route('/nextSpecificSong').post((req,res) => {
+    const name = req.body.name
+    const room = req.body.room
+    const id = req.body.id
+
+    const songs = retrieveSongById()
+    let specific
+    songs.forEach(element => {
+        if(element.id==id)
+        {
+            specific = element
+        }
+    })
+    var reminder = true
+    User.find({name,room})
+        .then(info => {
+            const cuser = info[0]
+            cuser.prevSongs.forEach(element => {
+                if(element == songs.indexOf(specific))
+                {
+                    cuser.currentPosition = cuser.prevSongs.indexOf(element)
+                    reminder = false
+                    cuser.save()
+                        .then(() => {
+                            res.json({success:false,index:cuser.prevSongs.indexOf(element),song:specific})
+                            return
+                        })
+                        .catch(err => console.log(err))
+                    
+                }
+            })
+            if(reminder)
+            {
+                console.log("how the hell am i here")
+                const narray = [...cuser.prevSongs, songs.indexOf(specific)]
+                cuser.prevSongs = narray
+                cuser.currentPosition = narray.length-1
+                cuser.save()
+                    .then(() => res.json({success:true,song:specific}))
+                    .catch(err => console.log(err))
+            }
+        })
+        .catch(err => console.log(err))
+    
 })
 router.route('/previousSong').post((req,res) => {
     const name  = req.body.name

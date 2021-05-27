@@ -62,7 +62,7 @@ router.route('/joinRoom').post((req,res) => {
             }
             console.log('works')
             const data = info[0]
-            if(data.members >=6)
+            if(data.members.length >=6)
             {
                 res.json({success:false, message: "This room has reached its maximum occupancy."})
                 return

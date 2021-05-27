@@ -9,7 +9,7 @@ export default function Home()
     const [name,setName] = useState("")
     const [joincode,setJoinCode] = useState("")
     const history = useHistory()
-    var firstClick = true
+    const [firstClick,setFirstClick] = useState(true)
     useEffect(()=> {
         document.getElementById('input-btn').addEventListener('click', function () {
         document.getElementById('input-txt').classList.add('active');
@@ -61,18 +61,21 @@ export default function Home()
     {
         if(firstClick)
         {
-            firstClick = false
+            console.log("here2")
+            setFirstClick(false)
             return
         }
         if(name.length==0)
         {
             document.getElementById("error-notification").innerHTML = "Please enter a name."
+            return
         }
         if(joincode.length==0 && !firstClick)
         {
             document.getElementById("error-notification").innerHTML = "Please enter a room code."
+            return
         }
-        if(joincode.length!=0 && name.length()>0)
+        if(joincode.length!=0 && name.length>0)
         {
             console.log("im here")
             axios.post("/joinRoom", {name,room:joincode})

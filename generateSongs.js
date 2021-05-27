@@ -43,10 +43,13 @@ function retrieveRandomSong(name,room)
 
     return songs[ranSong]
 }
-
+function retrieveSongById()
+{
+   return songs
+}
 function retrieveSpecificSong(position)
 {
     return songs[position]
 }
 
-module.exports = {generateSongs, retrieveRandomSong, retrieveSpecificSong}
+module.exports = {generateSongs, retrieveRandomSong, retrieveSpecificSong, retrieveSongById}

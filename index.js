@@ -92,7 +92,9 @@ io.on('connection', (socket) => {
                         return 1
                     }
                 })
-                io.to(room).emit('board', {sortedData: dataA})
+                const finalResult = dataA.filter(element => element[1] > 0)
+
+                io.to(room).emit('board', {sortedData: finalResult})
             })
     })
     socket.on('disconnect', () => {

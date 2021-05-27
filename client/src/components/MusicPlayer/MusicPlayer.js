@@ -17,12 +17,50 @@ export default function MusicPlayer(props)
     const [likes,setLikes] = useState([])
     const [pointer,setPointer] = useState(0)
     useEffect(() => {
+        props.socket.emit("updateBoard", {room: sessionStorage.getItem("room")}, () => console.log("oops"))
         axios.post("/music/randomSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room")})
             .then(res => {
                 setCurrentSong(res.data)
                 likes.push(false)
             })
     }, [])
+    useEffect(() => {
+        if(props.transfer != "")
+        {
+            console.log("here")
+            axios.post("/music/nextSpecificSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room"), id: props.transfer})
+                .then(res => {
+                    console.log(res.data)
+                    if(res.data.success)
+                    {
+                        setCurrentSong(res.data.song)
+                        likes.push(false)
+                        setPointer(setLikes.length-1)
+                        document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
+                        document.getElementById("likeinfo").innerHTML = "Like"
+                        setlikeImage(LikeD)
+                    }
+                    else
+                    {
+                        console.log("here")
+                        setCurrentSong(res.data.song)
+                        setPointer(res.data.index)
+                        if(likes[res.data.index])
+                        {
+                            document.getElementById("shufflechange").style.backgroundColor = "white"
+                            document.getElementById("likeinfo").innerHTML = "Like (Yes)"
+                            setlikeImage(LikeS)
+                        }
+                        else
+                        {
+                            document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
+                            document.getElementById("likeinfo").innerHTML = "Like"
+                            setlikeImage(LikeD)
+                        }
+                    }
+                })
+        }
+    },[props.transfer])
     function retrieveNextSong()
     {
         document.getElementById("shufflechange").style.backgroundColor = "#4e54c8"
@@ -66,6 +104,7 @@ export default function MusicPlayer(props)
                 })
         }
     }
+    
     function goBack()
     {
         axios.post("/music/previousSong", {name:sessionStorage.getItem("name"), room: sessionStorage.getItem("room")})

@@ -45,7 +45,7 @@ export default function MoreInformation(props)
             <tr>
                 <td>{element[0].name}</td>
                 <td>{element[1]}</td>
-                <td><button id="tblebutton">Listen</button></td>
+                <td><button onClick = {(event) => props.transfer(event)} value = {element[0].id}id="tblebutton">Listen</button></td>
             </tr>)
         })
     }
@@ -63,7 +63,7 @@ export default function MoreInformation(props)
             <div id="musicboard">
                 <h4 id = "titlem">Music Board</h4>
                 <p id="undertext">🎻Vibe with your Friends!🎻</p>
-                <table class="table table-sm" id="tble">
+                <table className="table table-sm" id="tble">
                     <thead>
                         <tr>
                         <th scope="col">Song</th>

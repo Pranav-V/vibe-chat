@@ -20,10 +20,19 @@ function retUserInfo(socket,io)
                 Room.find({room:user.room})
                     .then(data => {
                         var members = data[0].members
-                        const index = members.indexOf(user.name)
-                        members.splice(index,1)
+                        if(members.length == 1)
+                        {
+                            members = []
+                        }
+                        else
+                        {
+                            const index = members.indexOf(user.name)
+                            members.splice(index,1)
+                        }
                         console.log(members)
+                        console.log("boi")
                         data[0].members = members
+                        data[0].markModified('members');
                         data[0].save()
                             .then(() => {
                                 io.to(user.room).emit("message", {user: 'admin', text: `${user.name}`, img: -5})
