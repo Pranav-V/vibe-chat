@@ -32,7 +32,7 @@ const connection = mongoose.connection
 connection.once('open', () => {
     console.log('MongoDB connection established')
 })
-
+//Socket IO Interactions
 io.on('connection', (socket) => {
     socket.on('join', ({name,room}, callback) => {
         addSocket(socket,name,room)
@@ -103,7 +103,7 @@ io.on('connection', (socket) => {
        
     })
 })
-
+//import music router
 app.use(router)
 const musicRouter = require("./routes/musicRouter")
 const Room = require('./models/room.model')

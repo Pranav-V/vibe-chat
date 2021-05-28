@@ -3,8 +3,9 @@ const router = express.Router()
 const User = require('.././models/user.model')
 const Team = require('.././models/room.model')
 const {retrieveRandomSong, retrieveSpecificSong,retrieveSongById} = require("../generateSongs.js")
-
+//Routes for All Music Requests
 router.route('/randomSong').post((req,res) => {
+    //use imported method - retrieveRandomSong - to find song and save it to database
     const name = req.body.name
     const room = req.body.room
     const song = retrieveRandomSong(name,room)
@@ -30,6 +31,7 @@ router.route('/randomSong').post((req,res) => {
     res.json(song)
 })
 router.route('/nextSong').post((req,res) => {
+    //move pointer for the respective user
     const name = req.body.name
     const room = req.body.room
 
@@ -77,6 +79,7 @@ router.route('/nextSong').post((req,res) => {
         })
 })
 router.route('/nextSpecificSong').post((req,res) => {
+    //move to the next song, as specified by the request id
     const name = req.body.name
     const room = req.body.room
     const id = req.body.id
@@ -122,6 +125,7 @@ router.route('/nextSpecificSong').post((req,res) => {
     
 })
 router.route('/previousSong').post((req,res) => {
+    //move the pointer back in the User schema
     const name  = req.body.name
     const room = req.body.room
 
@@ -144,6 +148,7 @@ router.route('/previousSong').post((req,res) => {
 })
 
 router.route("/changeLike").post((req,res) => {
+    //change the Like ranking by updating the respective Room object
     const songData = req.body.song
     const room = req.body.room
     const dir = req.body.dir

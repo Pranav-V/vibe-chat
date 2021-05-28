@@ -2,6 +2,8 @@ var userSocket = []
 const User = require("./models/user.model")
 const Room = require("./models/room.model")
 const Chat = require("./models/chat.model")
+
+//maintains user-socket map in order to distinguse socket request
 function addSocket(socket,name,room)
 {
     userSocket.push({"socket":socket,"name":name,"room":room})

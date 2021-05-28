@@ -4,8 +4,9 @@ const Room = require("../models/room.model")
 var User = require("../models/user.model")
 var Chance = require('chance')
 const chance = new Chance()
-
+//router for authentication and room creation
 router.route('/createRoom').post((req,res) => {
+    //create a room along with a new user. check to see if the user name dne admin
     const name = req.body.name
     if(name=="admin")
     {
@@ -31,6 +32,7 @@ router.route('/createRoom').post((req,res) => {
 })
 
 router.route('/getMemberData').post((req,res) => {
+    //get the data for each user in a Room
     const room = req.body.room
    User.find({room:room})
         .then(info => {
@@ -44,6 +46,7 @@ router.route('/getMemberData').post((req,res) => {
 })
 
 router.route('/joinRoom').post((req,res) => {
+    //join a room by looking through Room object and validating the requirements
     const name = req.body.name
     const room = req.body.room
     const img = chance.integer({min:0,max:49})

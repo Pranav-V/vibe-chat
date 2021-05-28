@@ -3,7 +3,7 @@ var Chance = require('chance')
 const chance = new Chance()
 const User = require("./models/user.model")
 var songs = []
-
+//use axios to import songs from jamendo api
 function generateSongs() 
 {
     axios.get("https://api.jamendo.com/v3.0/tracks/?client_id=b0568c9a&format=jsonpretty&limit=all")
