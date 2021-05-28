@@ -2,9 +2,9 @@ import React, {useState,useEffect} from "react"
 import "./ChatBox.css"
 import images from "./images"
 import Message from "../Message/Message"
+import URL from "../../image_assets/url.png"
 import {
     FacebookShareButton,
-    LinkedinShareButton,
     TwitterShareButton,
     TelegramShareButton,
     WhatsappShareButton,
@@ -12,11 +12,9 @@ import {
     EmailShareButton,
     FacebookIcon,
     TwitterIcon,
-    LinkedinIcon,
     TelegramIcon,
     WhatsappIcon,
     RedditIcon,
-    EmailIcon,
   } from'react-share';
 
 export default function ChatBox(props)
@@ -54,7 +52,9 @@ export default function ChatBox(props)
                                 <b style={{color:"white", verticalAlign:"middle", display:"table-cell"}}>🎵&nbsp;&nbsp; Room - {props.room}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                             </div>
                             <div className = "col-lg-9 col-md-9 col-sm-12" style = {{height:"100%",top:"15%",textAlign:"right"}}>
+                                <img id="urlimg" onClick={() => {navigator.clipboard.writeText(link)}} src={URL} style={{borderRadius:"50%",backgroundColor:"white",height:"32px",width:"32px"}} />
                                 <WhatsappShareButton
+                                    id="attempt"
                                     url={link}
                                     quote={'Vibe Chat Join Link'}
                                     className="Demo__some-network__share-button"
