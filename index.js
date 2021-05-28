@@ -27,7 +27,7 @@ app.get('*', (req, res) => {
 
 generateSongs()
 
-mongoose.connect("Your Mongo Connection", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+mongoose.connect("mongodb+srv://pnav:pdatabase@cluster0.jvhte.mongodb.net/music-chat?retryWrites=true&w=majority", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
 const connection = mongoose.connection
 connection.once('open', () => {
     console.log('MongoDB connection established')
