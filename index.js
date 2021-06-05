@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const Chat = require('./models/chat.model')
 const Team = require('./models/room.model')
 const User = require('./models/user.model')
+require('dotenv').config()
 const PORT = process.env.PORT || 5000
 const cors = require('cors')
 const {generateSongs} = require("./generateSongs.js")
@@ -12,7 +13,7 @@ const {retUserInfo,addSocket} = require("./socketuser.js")
 const router = require('./routes/router')
 const app = express()
 const path = require('path')
-require('dotenv')
+
 
 const server = http.createServer(app)
 const io = socketio(server)
@@ -27,7 +28,7 @@ app.get('*', (req, res) => {
 
 generateSongs()
 
-mongoose.connect("mongodb+srv://pnav:pdatabase@cluster0.jvhte.mongodb.net/music-chat?retryWrites=true&w=majority", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
 const connection = mongoose.connection
 connection.once('open', () => {
     console.log('MongoDB connection established')
